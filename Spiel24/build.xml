@@ -1,0 +1,56 @@
+<project name="Spiel24" default="run" basedir=".">
+	<description>
+		Build-File für das Spiel 24
+    </description>
+
+	<!-- set global properties for this build -->
+    <property name="src" location="src"/>
+    <property name="build" location="build"/>
+    <property name="dist"  location="dist"/>
+	<property name="doc"  location="doc"/>
+	
+	<target name="init">
+	    <!-- Create the time stamp -->
+		<echo>creating time stamp ... </echo>
+	    <tstamp/>
+        <!-- Create the directories -->
+		<echo>creating directories ... </echo>
+        <mkdir dir="${build}"/>
+		<mkdir dir="${dist}/lib"/>
+		<mkdir dir="${doc}"/>
+    </target>
+	
+	<target name="javadoc" depends="init" description="create javadoc">
+	        <!-- Create the javadoc from ${src} into ${doc} -->
+			<echo>creating Javadoc ... </echo>
+			<javadoc sourcepath="${src}" destdir="${doc}"/>
+	</target>
+
+	<target name="compile" depends="javadoc" description="compile the source">
+        <!-- Compile the java code from ${src} into ${build} -->
+		<echo>compiling ... </echo>
+        <javac srcdir="${src}" destdir="${build}"/>
+    </target>
+   
+    <target name="dist" depends="compile" description="generate the distribution">
+        <!-- Put everything in ${build} into the MyProject-${DSTAMP}.jar file -->
+    	<echo>creating jar file ... </echo>
+        <jar destfile="${dist}/lib/Spiel24-${DSTAMP}.jar" basedir="${build}">
+	    	<manifest>
+	    		<attribute name="Main-Class" value="Spiel.Spiel24"/>
+	    	</manifest>
+        </jar>	
+    </target>
+ 
+    <target name="clean" depends="dist" description="clean up" >
+        <!-- Delete the ${build} and ${dist} directory trees -->
+    	<echo>deleting directories ... </echo>
+        <delete dir="${build}"/>
+    </target>
+	
+	<target name="run" depends="clean">
+		<echo>running jar file ${dist}\lib\Spiel24-${DSTAMP}.jar </echo>
+	    <java jar="${dist}/lib/Spiel24-${DSTAMP}.jar" fork="true" />
+	</target>
+
+</project>
