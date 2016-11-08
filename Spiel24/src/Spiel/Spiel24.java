@@ -7,7 +7,7 @@ import java.util.Scanner;
   *
   * 24 (Spiel)
   *
-  * @version 1.01 vom 08.11.2016
+  * @version 1.0 vom 08.11.2016
   * @author Michael Hartmann
   */
   
